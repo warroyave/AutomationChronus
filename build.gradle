@@ -1,0 +1,60 @@
+repositories{
+	mavenLocal()
+	jcenter()
+}
+
+buildscript{
+	repositories{
+		mavenLocal()
+		jcenter()
+	}
+	dependencies{
+		classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.8")
+	}
+}
+// Preconfiguradores:
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+dependencies{
+	
+	//Librerias necesarias para la ejecución de las pruebas:
+	
+	// API que importa las librerias base de serenity
+	testCompile 'net.serenity-bdd:serenity-core:2.0.8'
+	// API que importa las librerias de serenity-junit
+	testCompile 'net.serenity-bdd:serenity-junit:2.0.8'
+	// API que nos brinda las librerias mas basicas para las pruebas
+	testCompile('junit:junit:4.12')
+	// API necesario para escribir Asserts de forma facil, elegante y legible:
+	testCompile('org.assertj:assertj-core:1.7.0')
+	// Librerias necesarias para los registros de eventos:
+	testCompile('org.slf4j:slf4j-simple:1.7.7')
+	
+	//Librerias necesarias para la construccion de la aplicacion:
+	
+	// API que importa las librerias base de serenity
+	compile 'net.serenity-bdd:serenity-core:1.9.9'
+	// API para realizar nuestras pruebas unitarias con selenium
+	compile 'net.serenity-bdd:serenity-junit:1.9.9'
+	// API que nos permite trabajar con cucumber y sus features
+	compile 'net.serenity-bdd:serenity-cucumber:1.9.8'	
+	// API para incluir el patron de diseño "ScreenPlay"
+	compile 'net.serenity-bdd:serenity-screenplay:1.9.9'
+	// API para manipular el controlador del navegador
+	compile 'net.serenity-bdd:serenity-screenplay-webdriver:1.9.9'
+	
+	// https://mvnrepository.com/artifact/org.apache.poi/poi
+	// API para manipular archivos excel
+	compile "org.apache.poi:poi:4.0.1"
+	compile "org.apache.poi:poi-ooxml:4.0.1"
+	//compile group: 'org.apache.poi', name: 'poi', version: '4.0.1'
+	
+	
+}
+//Continuar incluso si el build falla:
+gradle.startParameter.continueOnFailure = true
+//
+test.finalizedBy(aggregate)
